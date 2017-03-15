@@ -7,14 +7,18 @@ var util = require('util');
 var walk = require('walk');
 var bot;
 
+var commands = ['mcstatus', 'faq'];
+
 // Get/Read Config
-function getConfigFile(){
+function getConfigFile() {
     var configOverride = './config/config.user.json',
-    defaultConfig = './config/config.default.json';
+        defaultConfig = './config/config.default.json';
     return require('fs').existsSync(configOverride) ? configOverride : defaultConfig;
 }
 
-nconf.file({file : getConfigFile() });
+nconf.file({ file: getConfigFile() });
+
+var cmdList = "";
 
 // Initialize IRC Connection
 
@@ -38,30 +42,41 @@ bot = new irc.Client(
     }
 );
 
+// 
+var controlChar = nconf.get('bot').controlChar;
+
 // Handelers
 bot.on('error', function (message) {
     util.log('[ERROR]: ', message);
 });
 
-bot.on('registered', function(message){
+bot.on('registered', function (message) {
     util.log('Connection Successfull');
 });
 
-bot.on('motd', function(message){
+bot.on('motd', function (message) {
     util.log(message);
 });
 
-bot.on('topic', function(message){
+bot.on('topic', function (message) {
     util.log(message);
 });
 
-bot.on('message', function (from, to, text) {
-  var self = this;
-  util.log(to + ' | ' + from + ': ' + text)
-});
-
-// plugins
-// todo
+bot.on('message', function (from, to, message) {
+    util.log(to + ' | ' + from + ': ' + message);
+    if (message.startsWith(controlChar)) {
+        var msg = message.replace(controlChar, "").split(" ");
+        var command = msg[0];
+        var args = msg.slice(2);
+        if (command == "help") {
+            bot.notice(from, "Usage: .help <command>");
+            bot.notice(from, "Available Commands: help, " + cmdList);
+        }
+        else {
+            bot.say(to, "Command not found");
+        }
+    };
+})
 
 bot.connect();
 util.log('Connecting to %s ...', nconf.get('connection').host);
