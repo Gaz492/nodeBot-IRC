@@ -1,0 +1,27 @@
+{
+    "connection": {
+        "host": "irc.esper.net",
+        "port": 6667,
+        "password": "password",
+        "usePassword": false
+    },
+    "channels": [
+        "#ftb"
+    ],
+    "bot": {
+        "nick": "FTBBot",
+        "nickServPass": "password",
+        "control_character": ".",
+        "dataFolder": "data"
+    },
+    "database": {
+        "type": "mysql",
+        "hostname": "localhost",
+        "username": "ftbbot",
+        "database": "ircbot",
+        "password": "password"
+    },
+    "plugins": {
+        "antispam": true
+    }
+}

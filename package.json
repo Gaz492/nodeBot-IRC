@@ -1,15 +1,17 @@
 {
-  "name": "nodeBot-IRC",
+  "name": "nodebot-irc",
   "version": "0.0.1",
   "description": "IRC bot designed to replace FTBBot in #FTB on esper",
   "main": "app.js",
   "author": "Gareth Williams",
   "license": "Apache-2.0",
+
   "dependencies": {
     "cheerio": "^0.22.0",
     "irc-colors": "^1.3.2",
     "mathjs": "^3.10.0",
     "request": "^2.81.0",
+    "valid-url": "^1.0.9",
     "walk": "^2.3.9"
   }
 }
