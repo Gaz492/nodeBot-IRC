@@ -1,10 +1,11 @@
 'use strict';
 
 // Initialize Requirements
-// var irc = require('irc');
+var irc = require('irc');
 var nconf = require('nconf');
 var util = require('util');
 var walk = require('walk');
+var bot;
 
 // Get/Read Config
 function getConfigFile(){
@@ -18,8 +19,23 @@ nconf.file({file : getConfigFile() });
 // Initialize IRC Connection
 
 bot = new irc.Client(
-    ncong.get('connection').host,
-    nconf.get('bot').nick
+    nconf.get('connection').host,
+    nconf.get('bot').nick,
+    {
+        channels: nconf.get('channels'),
+        userName: nconf.get('bot').userName,
+        realName: nconf.get('bot').realName,
+        autoRejoin: nconf.get('bot').autoRejoin,
+        autoConnect: nconf.get('bot').autoConnect,
+        secure: nconf.get('bot').secure,
+        floodProtection: nconf.get('bot').floodProtection,
+        floodProtectionDelay: nconf.get('bot').floodProtectionDelay,
+        sasl: nconf.get('bot').sasl,
+        retryCount: nconf.get('bot').retryCount,
+        retryDelay: nconf.get('bot').retryDelay,
+        showErrors: nconf.get('bot').showErrors,
+        debug: nconf.get('bot').debug
+    }
 );
 
 // Handelers
@@ -31,62 +47,21 @@ bot.on('registered', function(message){
     util.log('Connection Successfull');
 });
 
+bot.on('motd', function(message){
+    util.log(message);
+});
+
+bot.on('topic', function(message){
+    util.log(message);
+});
+
 bot.on('message', function (from, to, text) {
   var self = this;
-  for (var key in this.plugins.list) {
-    var plugin = this.plugins.list[key];
-    if (plugin.message) {
-      var regex = plugin.message.regex;
-      var result = regex.exec(text);
-      if (result) {
-        if (to === this.nick) { // pm instead of channel
-          to = from;
-        }
-        try {
-          plugin.message.handler({ "result": result, "text": text, "to": to, "from": from, "callback": self });
-        } catch (err) {
-          util.log("Plugin '" + key + "' error: " + err);
-        }
-      }
-    }
-  }
+  util.log(to + ' | ' + from + ': ' + text)
 });
 
 // plugins
-bot.plugins = {
-  "list": {},
-  "load": function (name, plugin) {
-    try {
-      this.list[name] = require(plugin);
-      util.log("Plugin '" + name + "' loaded");
-    } catch (err) {
-      util.log('Plugin loading error: ' + err);
-    }
-  },
-  "loadAll": function () {
-    var walker = walk.walk('./plugins', { followLinks: false });
+// todo
 
-    walker.on('file', function (root, stat, next) {
-      if (stat.name.slice(-3).toLowerCase() === '.js') {
-        this.load(stat.name, root + '/' + stat.name);
-      }
-      next();
-    }.bind(this));
-
-    walker.on("end", function () {
-      bot.connect();
-      util.log('Connecting to %s ...', nconf.get('connection').server);
-    });
-  },
-  "unload": function (plugin) {
-    delete this.list[plugin];
-    util.log("Plugin '" + plugin + "' unloaded");
-  },
-  "unloadAll": function () {
-    for (var plugin in this.list) {
-      this.unload(plugin);
-    }
-  }
-};
-
-bot.plugins.loadAll();
+bot.connect();
+util.log('Connecting to %s ...', nconf.get('connection').host);

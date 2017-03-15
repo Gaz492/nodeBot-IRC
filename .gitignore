@@ -42,3 +42,4 @@ jspm_packages
 # Other
 yarn.lock
 .DS_STORE
+config/config\.user\.json

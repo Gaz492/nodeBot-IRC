@@ -5,14 +5,22 @@
         "password": "password",
         "usePassword": false
     },
-    "channels": [
-        "#ftb"
-    ],
+    "channels": ["#ftb"],
     "bot": {
-        "nick": "FTBBot",
+        "nick": "FTBBotV2",
+        "userName": "FTBBotV2",
+        "realName": "FTBBot V2",
         "nickServPass": "password",
-        "control_character": ".",
-        "dataFolder": "data"
+        "autoRejoin": false,
+        "autoConnect": true,
+        "secure": false,
+        "floodProtection": false,
+        "floodProtectionDelay": 1000,
+        "sasl": false,
+        "retryCount": 3,
+        "retryDelay": 2000,
+        "showErrors": false,
+        "debug": false
     },
     "database": {
         "type": "mysql",
