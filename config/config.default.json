@@ -11,7 +11,6 @@
         "userName": "FTBBotV2",
         "realName": "FTBBot V2",
         "nickServPass": "password",
-        "controlChar": ".",
         "autoRejoin": false,
         "autoConnect": true,
         "secure": false,
