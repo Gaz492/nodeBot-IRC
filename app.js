@@ -1,24 +1,30 @@
 'use strict';
 
 // Initialize Requirements
-var irc = require('irc');
-var nconf = require('nconf');
-var util = require('util');
-var walk = require('walk');
-var bot;
+const irc = require('irc');
+const nconf = require('nconf');
+const util = require('util');
+const walk = require('walk');
+
+// Middleware
+
+const commandManager = require('./middleware/commandManager')
 
 // Get/Read Config
-function getConfigFile(){
-    var configOverride = './config/config.user.json',
-    defaultConfig = './config/config.default.json';
+function getConfigFile() {
+    const configOverride = './config/config.user.json',
+        defaultConfig = './config/config.default.json';
     return require('fs').existsSync(configOverride) ? configOverride : defaultConfig;
 }
 
-nconf.file({file : getConfigFile() });
+nconf.file({ file: getConfigFile() });
+
+// Custom Vars
+const controlChar = nconf.get('bot').controlChar
 
 // Initialize IRC Connection
 
-bot = new irc.Client(
+const bot = new irc.Client(
     nconf.get('connection').host,
     nconf.get('bot').nick,
     {
@@ -43,21 +49,26 @@ bot.on('error', function (message) {
     util.log('[ERROR]: ', message);
 });
 
-bot.on('registered', function(message){
+bot.on('registered', function (message) {
     util.log('Connection Successfull');
 });
 
-bot.on('motd', function(message){
+bot.on('motd', function (message) {
     util.log(message);
 });
 
-bot.on('topic', function(message){
+bot.on('topic', function (message) {
     util.log(message);
 });
 
-bot.on('message', function (from, to, text) {
-  var self = this;
-  util.log(to + ' | ' + from + ': ' + text)
+bot.on('message', function (from, to, message) {
+    util.log(to + ' | ' + from + ': ' + message)
+    if (message.startsWith(controlChar)) {
+        var msg = message.replace(controlChar, "").split(" ");
+        var command = msg[0];
+        var args = msg.slice(2);
+        commandManager.commandManager(command, from, to, args)
+    };
 });
 
 // plugins

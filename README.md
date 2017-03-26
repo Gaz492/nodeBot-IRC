@@ -1,1 +1,0 @@
-# nodeBot-IRC
