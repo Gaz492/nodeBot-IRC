@@ -5,14 +5,14 @@ var util = require('util');
 var walk = require('walk');
 
 // Custom
-var ircCore = require('./modules/commandManager').ircCore()
+var ircCore = require('./modules/irc/core');
 
 
 
 // Initialize IRC Connection
 
 var client = new irc.Client();
-client.use(ircCore);
+var controlChar = nconf.get('bot').controlChar;
 
 client.connect({
     host: nconf.get('connection').host,
@@ -32,8 +32,8 @@ client.connect({
 
 client.on('registered', function() {
 	console.log('Connected!');
-    for(i in nconf.get('channels')){
-        console.log(nconf.get('channels')[i])
+    for(var i in nconf.get('channels')){
+        console.log(nconf.get('channels')[i]);
         client.join(nconf.get('channels')[i]);
     }
 });
@@ -44,6 +44,9 @@ client.on('close', function() {
 
 client.on('message', function(event) {
     console.log(event.target + ' | ' + event.nick + ': ' + event.message)
+    if(event.message.startsWith(controlChar)) {
+        ircCore.onCommand(event, client)
+    }
 });
 
 client.on('whois', function(event) {

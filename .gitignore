@@ -43,3 +43,5 @@ jspm_packages
 yarn.lock
 .DS_STORE
 config/config\.user\.json
+
+\.idea/
