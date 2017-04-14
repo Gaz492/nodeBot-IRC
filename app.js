@@ -1,30 +1,21 @@
 'use strict';
 
 // Initialize Requirements
-const irc = require('irc');
-const nconf = require('nconf');
-const util = require('util');
-const walk = require('walk');
+var irc = require('irc');
+var nconf = require('./modules/configReader');
+var util = require('util');
+var walk = require('walk');
 
 // Middleware
 
-const commandManager = require('./middleware/commandManager')
-
-// Get/Read Config
-function getConfigFile() {
-    const configOverride = './config/config.user.json',
-        defaultConfig = './config/config.default.json';
-    return require('fs').existsSync(configOverride) ? configOverride : defaultConfig;
-}
-
-nconf.file({ file: getConfigFile() });
+var commandManager = require('./modules/commandManager')
 
 // Custom Vars
-const controlChar = nconf.get('bot').controlChar
+var controlChar = nconf.get('bot').controlChar
 
 // Initialize IRC Connection
 
-const bot = new irc.Client(
+var client = new irc.Client(
     nconf.get('connection').host,
     nconf.get('bot').nick,
     {
@@ -45,23 +36,23 @@ const bot = new irc.Client(
 );
 
 // Handelers
-bot.on('error', function (message) {
+client.on('error', function (message) {
     util.log('[ERROR]: ', message);
 });
 
-bot.on('registered', function (message) {
+client.on('registered', function (message) {
     util.log('Connection Successfull');
 });
 
-bot.on('motd', function (message) {
+client.on('motd', function (message) {
     util.log(message);
 });
 
-bot.on('topic', function (message) {
+client.on('topic', function (message) {
     util.log(message);
 });
 
-bot.on('message', function (from, to, message) {
+client.on('message', function (from, to, message) {
     util.log(to + ' | ' + from + ': ' + message)
     if (message.startsWith(controlChar)) {
         var msg = message.replace(controlChar, "").split(" ");
@@ -74,5 +65,16 @@ bot.on('message', function (from, to, message) {
 // plugins
 // todo
 
-bot.connect();
+client.connect();
 util.log('Connecting to %s ...', nconf.get('connection').host);
+
+// Things
+
+module.exports = {
+    sendMessage: function(to, message){
+        client.say(to, message);
+    },
+    sendNotice: function(to, message){
+        client.notice(to, message)
+    }
+}
