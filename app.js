@@ -1,78 +1,67 @@
-'use strict';
-
 // Initialize Requirements
-const irc = require('irc');
-const nconf = require('nconf');
-const util = require('util');
-const walk = require('walk');
+var irc = require('irc-framework');
+var nconf = require('./modules/configReader');
+var util = require('util');
+var walk = require('walk');
 
-// Middleware
+// Custom
+var ircCore = require('./modules/commandManager').ircCore()
 
-const commandManager = require('./middleware/commandManager')
 
-// Get/Read Config
-function getConfigFile() {
-    const configOverride = './config/config.user.json',
-        defaultConfig = './config/config.default.json';
-    return require('fs').existsSync(configOverride) ? configOverride : defaultConfig;
-}
-
-nconf.file({ file: getConfigFile() });
-
-// Custom Vars
-const controlChar = nconf.get('bot').controlChar
 
 // Initialize IRC Connection
 
-const bot = new irc.Client(
-    nconf.get('connection').host,
-    nconf.get('bot').nick,
-    {
-        channels: nconf.get('channels'),
-        userName: nconf.get('bot').userName,
-        realName: nconf.get('bot').realName,
-        autoRejoin: nconf.get('bot').autoRejoin,
-        autoConnect: nconf.get('bot').autoConnect,
-        secure: nconf.get('bot').secure,
-        floodProtection: nconf.get('bot').floodProtection,
-        floodProtectionDelay: nconf.get('bot').floodProtectionDelay,
-        sasl: nconf.get('bot').sasl,
-        retryCount: nconf.get('bot').retryCount,
-        retryDelay: nconf.get('bot').retryDelay,
-        showErrors: nconf.get('bot').showErrors,
-        debug: nconf.get('bot').debug
+var client = new irc.Client();
+client.use(ircCore);
+
+client.connect({
+    host: nconf.get('connection').host,
+    nick: nconf.get('bot').nick,
+    username: nconf.get('bot').userName,
+    gecos: nconf.get('bot').realName,
+    encoding: nconf.get('bot').encoding,
+    version: nconf.get('bot').version,
+    enable_chghost: nconf.get('bot').enable_chghost,
+    enable_echomessage: nconf.get('bot').enable_echomessage,
+    auto_reconnect: nconf.get('bot').auto_reconnect,
+    auto_reconnect_wait: nconf.get('bot').auto_reconnect_wait,
+    auto_reconnect_max_retries: nconf.get('bot').auto_reconnect_max_retries,
+    ping_interval: nconf.get('bot').ping_interval,
+    ping_timeout: nconf.get('bot').ping_timeout
+})
+
+client.on('registered', function() {
+	console.log('Connected!');
+    for(i in nconf.get('channels')){
+        console.log(nconf.get('channels')[i])
+        client.join(nconf.get('channels')[i]);
     }
-);
-
-// Handelers
-bot.on('error', function (message) {
-    util.log('[ERROR]: ', message);
 });
 
-bot.on('registered', function (message) {
-    util.log('Connection Successfull');
+client.on('close', function() {
+	console.log('Connection close');
 });
 
-bot.on('motd', function (message) {
-    util.log(message);
+client.on('message', function(event) {
+    console.log(event.target + ' | ' + event.nick + ': ' + event.message)
 });
 
-bot.on('topic', function (message) {
-    util.log(message);
+client.on('whois', function(event) {
+	// console.log(event);
 });
 
-bot.on('message', function (from, to, message) {
-    util.log(to + ' | ' + from + ': ' + message)
-    if (message.startsWith(controlChar)) {
-        var msg = message.replace(controlChar, "").split(" ");
-        var command = msg[0];
-        var args = msg.slice(2);
-        commandManager.commandManager(command, from, to, args)
-    };
+client.on('join', function(event) {
+	// console.log('user joined', event);
 });
 
-// plugins
-// todo
+client.on('userlist', function(event) {
+	// console.log('userlist for', event.channel, event.users);
+});
 
-bot.connect();
-util.log('Connecting to %s ...', nconf.get('connection').host);
+client.on('part', function(event) {
+	// console.log('user part', event);
+});
+
+// client.on('topic', function(event) {
+// 	console.log(event);
+// });
