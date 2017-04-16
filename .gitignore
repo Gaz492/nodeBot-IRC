@@ -44,4 +44,4 @@ yarn.lock
 .DS_STORE
 config/config\.user\.json
 
-config/config\.user\.new\.json
+\.idea/
