@@ -1,15 +1,15 @@
-var irc = require('irc');
-var util = require('util');
-var walk = require('walk');
+const irc = require('irc');
+const util = require('util');
+const walk = require('walk');
 
 // Custom Modules
-var nconf = require('../configReader');
-var cmdManager = require('./commandManager');
+const nconf = require('../configReader');
+const cmdManager = require('./commandManager');
 
-var controlChar = nconf.get('bot').controlChar;
+const controlChar = nconf.get('bot').controlChar;
 
 // Init
-var client = new irc.Client(
+const client = new irc.Client(
     nconf.get('connection').host,
     nconf.get('bot').nick,
     {
@@ -55,11 +55,11 @@ client.on('names', function(channel, nicks){
 });
 
 client.on('message', function (from, to, message) {
-    console.log(to + ' | ' + from + ': ' + message)
+    console.log(to + ' | ' + from + ': ' + message);
     if (message.startsWith(controlChar)) {
-        var msg = message.replace(controlChar, "").split(" ");
-        var command = msg[0];
-        var args = msg.slice(1);
+        let msg = message.replace(controlChar, "").split(" ");
+        let command = msg[0];
+        let args = msg.slice(1);
         cmdManager.onCommand(client, command, to, from, args)
     }
 });

@@ -2,8 +2,8 @@
 
 // Initialize Requirements
 
-var nconf = require('./modules/configReader');
-var client = require('./modules/bot/bot');
+const nconf = require('./modules/configReader');
+const client = require('./modules/bot/bot');
 
 // Initialize IRC Connection
 
