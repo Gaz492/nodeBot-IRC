@@ -6,8 +6,7 @@
 
 const request = require('request');
 
-module.exports = {
-    checkValidPlayerName: function(playerName){
+function checkValidPlayerName(playerName){
         const url = 'https://api.mojang.com/users/profiles/minecraft/';
 
         request({
@@ -20,8 +19,8 @@ module.exports = {
                 return false;
             }
         })
-    },
-    checkValidUUID: function (uuid) {
+    };
+    function checkValidUUID(uuid) {
         const url = 'https://sessionserver.mojang.com/session/minecraft/profile/';
 
         request({
@@ -34,5 +33,13 @@ module.exports = {
                 return false;
             }
         })
+    }
+
+module.exports = {
+    load: function(){
+        return 
+    },
+    paid: function(username){
+
     }
 };
