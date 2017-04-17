@@ -6,11 +6,10 @@ const nconf = require('../configReader');
 const colour = require('irc-colors');
 
 const mcCheck = require('../core/mcCheck');
+var client;
 
 let cmdList = {"commandManager": "help"};
 let isInit = false;
-
-init();
 
 function findValue(module, value, object) {
     for (let prop in object) {
@@ -20,14 +19,21 @@ function findValue(module, value, object) {
     }
 }
 
-function init(){
+function init(passedClient){
+
     if(!isInit){
         registerCmd("commandManager", "help");
         registerCmd("mcCheck", "paid");
         registerCmd("mcCheck", "mcstatus");
     }
     isInit = true;
+    client = passedClient;
 }
+setInterval(function(){
+    mcCheck.autoStatus(function(data){
+        client.say(nconf.get('minecraft').channel, data)
+    })
+}, nconf.get('minecraft').statusRefreshTimer);
 
 function registerCmd(module, command){
     if(!cmdList.hasOwnProperty(module)){
@@ -80,6 +86,7 @@ function onCommand(client, command, to, from, args){
 }
 
 module.exports = {
+    init: init,
     registerCmd: registerCmd,
     onCommand: onCommand
 

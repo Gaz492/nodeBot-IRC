@@ -1,37 +1,43 @@
 {
-    "connection": {
-        "host": "irc.esper.net",
-        "port": 6667,
-        "password": "password",
-        "usePassword": false
-    },
-    "channels": ["#ftb"],
-    "bot": {
-        "nick": "FTBBotV2",
-        "userName": "FTBBotV2",
-        "realName": "FTBBot V2",
-        "nickServPass": "password",
-        "controlChar": ",",
-        
-        "autoRejoin": false,
-        "autoConnect": true,
-        "secure": false,
-        "floodProtection": false,
-        "floodProtectionDelay": 1000,
-        "sasl": false,
-        "retryCount": 3,
-        "retryDelay": 2000,
-        "showErrors": false,
-        "debug": false
-    },
-    "database": {
-        "type": "mysql",
-        "hostname": "localhost",
-        "username": "ftbbot",
-        "database": "ircbot",
-        "password": "password"
-    },
-    "plugins": {
-        "antispam": true
-    }
+  "connection": {
+    "host": "irc.esper.net",
+    "port": 6667,
+    "password": "password",
+    "usePassword": false
+  },
+  "channels": [
+    "#ftb"
+  ],
+  "bot": {
+    "nick": "FTBBotV2",
+    "userName": "FTBBotV2",
+    "realName": "FTBBot V2",
+    "nickServPass": "password",
+    "controlChar": ",",
+    "autoRejoin": false,
+    "autoConnect": true,
+    "secure": false,
+    "floodProtection": false,
+    "floodProtectionDelay": 1000,
+    "sasl": false,
+    "retryCount": 3,
+    "retryDelay": 2000,
+    "showErrors": false,
+    "debug": false
+  },
+  "database": {
+    "type": "mysql",
+    "hostname": "localhost",
+    "username": "ftbbot",
+    "database": "ircbot",
+    "password": "password"
+  },
+  "minecraft": {
+    "autoStatusEnabled": true,
+    "statusRefreshTimer": 50000,
+    "channel": "#gaz"
+  },
+  "plugins": {
+    "antispam": true
+  }
 }

@@ -36,6 +36,7 @@ client.on('error', function (message) {
 
 client.on('registered', function (message) {
     console.log('Connection Successfull');
+    cmdManager.init(client);
 });
 
 client.on('join', function(channel, nick, message){
