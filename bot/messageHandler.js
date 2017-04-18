@@ -4,15 +4,14 @@
  */
 'use strict';
 const config = require('../configs/config');
-const irc = require('irc');
-
-const client = irc.Client();
+const cmdManager = require('./commandManager');
 
 function messageHandler(bot, from, to , message){
     let splitMsg = message.split(' ');
-    client.say(to, "Working");
+    let command = splitMsg[0].replace(config.bot.commandPrefix, '');
+    bot.say(to, "Working");
     if(splitMsg[0].startsWith(config.bot.commandPrefix)){
-    //    Send to commandManager
+    cmdManager.onCommand(bot, command, from, to, splitMsg)
     }
 }
 

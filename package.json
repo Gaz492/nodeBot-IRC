@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "irc-colors": "^1.3.3",
-    "irc": "^0.5.2",
+    "irc-framework": "^2.6.1",
     "mathjs": "^3.11.5",
     "request": "^2.81.0",
     "sprintf-js": "^1.0.3",
