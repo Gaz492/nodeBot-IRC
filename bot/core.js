@@ -32,9 +32,6 @@ const logActions = {
 */
 const bot = new irc.Client();
 
-// bot.addListener('debug', function(event){
-//     console.log(event);
-// });
 
 bot.addListener('registered', function(event){
     console.log('Connection Successful');

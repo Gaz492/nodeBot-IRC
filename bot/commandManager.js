@@ -1,7 +1,7 @@
 /**
- * @author Gareth
- * Created on 17/04/2017.
- */
+* @author Gareth
+* Created on 17/04/2017.
+*/
 'use strict';
 
 const mcCheck = require('./module/minecraft');
@@ -12,15 +12,7 @@ function onCommand(bot, command, from, to, splitMsg) {
         if (args.length >= 1){
             bot.notice(from, "Nothing here yet");
         }else{
-            // let printCmdList = [];
-            // for (let prop in cmdList) {
-            //     if (cmdList.hasOwnProperty(prop)) {
-            //         let splitCmd = cmdList[prop].split(",");
-            //         printCmdList = printCmdList.concat(splitCmd);
-            //     }
-            // }
             bot.notice(from, "Usage: .help <command>");
-            // client.notice(from, "Available Commands: " + printCmdList.toString());
             bot.notice(from, "Available Commands: paid,mcstatus");
         }
     }
@@ -29,7 +21,7 @@ function onCommand(bot, command, from, to, splitMsg) {
             if (data) {
                 let uuid = data.id;
                 let name = data.name;
-
+                
                 bot.say(to, "Username: " + colour.bold(name) + ", UUID: " + colour.bold(uuid) + ", Paid: " + colour.green.bold("TRUE"));
             } else {
                 bot.say(to, "No data for " + colour.bold(splitMsg[1]));
