@@ -1,0 +1,25 @@
+{
+  "name": "nodebot-irc",
+  "version": "0.0.1",
+  "description": "IRC Bot made for #ftb in esper",
+  "main": "app.js",
+  "dependencies": {
+    "irc-colors": "^1.3.3",
+    "irc": "^0.5.2",
+    "mathjs": "^3.11.5",
+    "request": "^2.81.0",
+    "sprintf-js": "^1.0.3",
+    "walk": "^2.3.9"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaz492/nodeBot-IRC.git"
+  },
+  "author": "Gareth Williams",
+  "license": "SEE LICENCE IN LICENCE.TXT",
+  "bugs": {
+    "url": "https://github.com/gaz492/nodeBot-IRC/issues"
+  },
+  "homepage": "https://github.com/gaz492/nodeBot-IRC#readme"
+}
