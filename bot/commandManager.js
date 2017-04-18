@@ -9,7 +9,20 @@ const colour = require('irc-colors');
 
 function onCommand(bot, command, from, to, splitMsg) {
     if (command === "help") {
-        bot.say(to, "Help is here!!!")
+        if (args.length >= 1){
+            bot.notice(from, "Nothing here yet");
+        }else{
+            // let printCmdList = [];
+            // for (let prop in cmdList) {
+            //     if (cmdList.hasOwnProperty(prop)) {
+            //         let splitCmd = cmdList[prop].split(",");
+            //         printCmdList = printCmdList.concat(splitCmd);
+            //     }
+            // }
+            bot.notice(from, "Usage: .help <command>");
+            // client.notice(from, "Available Commands: " + printCmdList.toString());
+            bot.notice(from, "Available Commands: paid,mcstatus");
+        }
     }
     else if (command === "paid") {
         mcCheck.checkPlayerName(splitMsg[1], function (data) {

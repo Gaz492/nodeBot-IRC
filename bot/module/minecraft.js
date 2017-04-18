@@ -21,19 +21,6 @@ const status_friendly_names = {
     "mojang.com": "Mojang website"
 };
 
-let statuses = {
-    "minecraft.net": " ???",
-    "account.mojang.com": " ???",
-    "authserver.mojang.com": " ???",
-    "sessionserver.mojang.com": " ???",
-    "textures.minecraft.net": " ???",
-    "api.mojang.com": " ???",
-    "session.minecraft.net": " ???",
-    "auth.mojang.com": " ???",
-    "skins.minecraft.net": " ???",
-    "mojang.com": " ???"
-};
-
 module.exports = {
     checkPlayerName: function (playerName, callback) {
         const url = 'https://api.mojang.com/users/profiles/minecraft/';
@@ -122,6 +109,19 @@ module.exports = {
     autoStatus: function (callback) {
         const url = 'https://status.mojang.com/check';
 
+        let statuses = {
+            "minecraft.net": " ???",
+            "account.mojang.com": " ???",
+            "authserver.mojang.com": " ???",
+            "sessionserver.mojang.com": " ???",
+            "textures.minecraft.net": " ???",
+            "api.mojang.com": " ???",
+            "session.minecraft.net": " ???",
+            "auth.mojang.com": " ???",
+            "skins.minecraft.net": " ???",
+            "mojang.com": " ???"
+        };
+
         request({
             url: url,
             json: true
@@ -179,6 +179,7 @@ module.exports = {
                 if(times !== 0){
                     callback("Mojang status: " + message);
                 }
+                statuses = parsed_status;
             } else {
                 callback("Nothing");
             }

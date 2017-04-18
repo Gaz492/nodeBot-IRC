@@ -77,10 +77,10 @@ bot.addListener('message', function(event){
 });
 
 
-setInterval(function(){
-    minecraft.autoStatus(function(data){
-        bot.raw("PRIVMSG", "#gaz", data)
-    })
-}, 5000);
+// setInterval(function(){
+//     minecraft.autoStatus(function(data){
+//         bot.raw("PRIVMSG", "#gaz", data)
+//     })
+// }, 5000);
 
 module.exports = bot;
