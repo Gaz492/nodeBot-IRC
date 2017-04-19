@@ -33,6 +33,11 @@ function onCommand(bot, command, from, to, splitMsg) {
             bot.raw("PRIVMSG", to, data)
         })
     }
+    else if (command === "whois"){
+        bot.whois(splitMsg[1], function(callback){
+            console.log(callback);
+        })
+    }
     else {
         bot.say(to, "Command not found");
     }

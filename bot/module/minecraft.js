@@ -109,19 +109,6 @@ module.exports = {
     autoStatus: function (callback) {
         const url = 'https://status.mojang.com/check';
 
-        let statuses = {
-            "minecraft.net": " ???",
-            "account.mojang.com": " ???",
-            "authserver.mojang.com": " ???",
-            "sessionserver.mojang.com": " ???",
-            "textures.minecraft.net": " ???",
-            "api.mojang.com": " ???",
-            "session.minecraft.net": " ???",
-            "auth.mojang.com": " ???",
-            "skins.minecraft.net": " ???",
-            "mojang.com": " ???"
-        };
-
         request({
             url: url,
             json: true
@@ -136,6 +123,18 @@ module.exports = {
 
                 let times = 0;
                 let message = "";
+                let statuses = {
+                    "minecraft.net": " ???",
+                    "account.mojang.com": " ???",
+                    "authserver.mojang.com": " ???",
+                    "sessionserver.mojang.com": " ???",
+                    "textures.minecraft.net": " ???",
+                    "api.mojang.com": " ???",
+                    "session.minecraft.net": " ???",
+                    "auth.mojang.com": " ???",
+                    "skins.minecraft.net": " ???",
+                    "mojang.com": " ???"
+                };
 
                 data.forEach(function (element) {
                     for (let key in element) {
