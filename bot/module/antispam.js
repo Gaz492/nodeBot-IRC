@@ -4,6 +4,6 @@
  */
 'use strict';
 
-function antispam(bot){
+function antispam(bot, from){
     
 }

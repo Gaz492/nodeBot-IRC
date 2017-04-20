@@ -17,7 +17,8 @@ const config = {
         userName: "FTBBot-V2",
         realName: "FTBBot-V2",
         nickServPass: "password",
-        commandPrefix: ","
+        commandPrefix: ",",
+        joinInvited: false
     },
     database: {
         hostname: "localhost",

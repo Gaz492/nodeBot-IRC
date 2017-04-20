@@ -73,6 +73,10 @@ bot.addListener('message', function(event){
     msgHandler.msgHandler(bot, from, to, message)
 });
 
+bot.addListener("invited", function(nick, channel){
+    bot.join(channel);
+})
+
 
 // setInterval(function(){
 //     minecraft.autoStatus(function(data){
