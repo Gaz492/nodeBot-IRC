@@ -2,9 +2,8 @@
  * @author Gareth
  * Created on 17/04/2017.
  */
-
-const client = require('./bot/core');
-const config = require('./configs/config');
+import client from './bot/core';
+import config from './configs/config';
 
 client.connect({
     host: config.server.host,

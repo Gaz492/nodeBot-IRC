@@ -3,9 +3,8 @@
 * Created on 17/04/2017.
 */
 'use strict';
-
-const config = require('../configs/config');
-const cmdManager = require('./commandManager');
+import config from '../configs/config';
+import cmdManager from './commandManager';
 
 function messageHandler(bot, from, to , message){
     let splitMsg = message.split(' ');

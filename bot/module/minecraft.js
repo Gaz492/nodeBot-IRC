@@ -3,10 +3,11 @@
  * Created on 17/04/2017.
  */
 'use strict';
+import request from 'request';
+import sprintf from 'sprintf-js';
+import colour from 'irc-colors';
 
-const request = require('request');
-const vsprintf = require('sprintf-js').vsprintf;
-const colour = require('irc-colors');
+const vsprintf = sprintf.vsprintf;
 
 const status_friendly_names = {
     "minecraft.net": " Minecraft.net",

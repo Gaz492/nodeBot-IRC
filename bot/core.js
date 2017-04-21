@@ -4,12 +4,16 @@
  */
 
 'use strict';
-const irc = require('irc-framework');
-const colour = require('irc-colors');
-const config = require('../configs/config');
-const walk = require('walk');
-const msgHandler = require('./messageHandler');
-const minecraft = require('./module/minecraft');
+import irc from 'irc-framework';
+import colour from 'irc-colors';
+import walk from 'walk';
+
+// Modules
+import msgHandler from './messageHandler';
+import minecraft from './module/minecraft';
+
+// Configs
+import config from '../configs/config';
 
 // Set Vars
 const commandPrefix = config.bot.commandPrefix;
