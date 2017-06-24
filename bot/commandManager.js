@@ -13,7 +13,7 @@ function onCommand(bot, command, from, to, splitMsg) {
             if (splitMsg.length > 1){
                 bot.notice(from, "Nothing here yet");
             }else{
-                bot.notice(from, "Usage: .help <command>");
+                bot.notice(from, "Usage: .help [command]");
                 bot.notice(from, "Available Commands: paid,mcstatus");
             }
             break;

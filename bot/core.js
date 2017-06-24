@@ -79,7 +79,11 @@ bot.addListener('message', function(event){
 
 bot.addListener("invited", function(nick, channel){
     bot.join(channel);
-})
+});
+
+minecraft.autoStatus(function(callback){
+   bot.say(callback)
+});
 
 
 // setInterval(function(){
