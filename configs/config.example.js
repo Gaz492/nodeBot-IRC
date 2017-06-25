@@ -29,6 +29,11 @@ const config = {
     plugins:{
         example: true
     },
+    minecraft:{
+        enabled: true,
+        poll_interval: 600,   // Time in seconds
+        send_channel: "#ftb"    // Bot must be in channel
+    },
     misc:{
         encoding: 'utf8',
         version: 'FTBBot-V2',

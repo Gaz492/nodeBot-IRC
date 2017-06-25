@@ -122,6 +122,7 @@ module.exports = {
     },
     autoStatus: function (callback) {
         const url = 'https://status.mojang.com/check';
+        // const url = 'https://gaz492.uk/mc.json';
 
 
         request({

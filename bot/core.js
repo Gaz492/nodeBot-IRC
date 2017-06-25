@@ -43,11 +43,17 @@ bot.addListener('registered', function(event){
         console.log(config.channels[i]);
         bot.join(config.channels[i]);
     }
-    setInterval(function () {
+    if(config.minecraft.enabled){
+        let poll_interval = config.minecraft.poll_interval * 1000;
         minecraft.autoStatus(function(callback){
-            bot.raw("PRIVMSG", "#gaz", callback)
-        })
-    }, 5000);
+            bot.raw("PRIVMSG", config.minecraft.send_channel, callback)
+        });
+        setInterval(function () {
+            minecraft.autoStatus(function(callback){
+                bot.raw("PRIVMSG", config.minecraft.send_channel, callback)
+            })
+        }, poll_interval);
+    }
     // ToDo Init command manager
 });
 
