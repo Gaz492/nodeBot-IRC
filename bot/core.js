@@ -39,6 +39,7 @@ const bot = new irc.Client();
 
 bot.addListener('registered', function(event){
     console.log('Connection Successful');
+    bot.say('nickserv', 'identify ' + config.bot.userName + ' ' + config.bot.nickServPass);
     for(let i in config.channels){
         console.log(config.channels[i]);
         bot.join(config.channels[i]);
