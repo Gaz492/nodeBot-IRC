@@ -4,8 +4,8 @@
  */
 'use strict';
 import request from 'request';
-import sprintf from 'sprintf-js';
 import colour from 'irc-colors';
+import sprintf from 'sprintf-js';
 
 const vsprintf = sprintf.vsprintf;
 
