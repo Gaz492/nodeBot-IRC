@@ -43,6 +43,11 @@ bot.addListener('registered', function(event){
         console.log(config.channels[i]);
         bot.join(config.channels[i]);
     }
+    setInterval(function () {
+        minecraft.autoStatus(function(callback){
+            bot.raw("PRIVMSG", "#gaz", callback)
+        })
+    }, 5000);
     // ToDo Init command manager
 });
 
@@ -79,10 +84,6 @@ bot.addListener('message', function(event){
 
 bot.addListener("invited", function(nick, channel){
     bot.join(channel);
-});
-
-minecraft.autoStatus(function(callback){
-   bot.say(callback)
 });
 
 

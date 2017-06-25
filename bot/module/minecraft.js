@@ -9,6 +9,19 @@ import colour from 'irc-colors';
 
 const vsprintf = sprintf.vsprintf;
 
+let statuses = {
+    "minecraft.net": " ???",
+    "account.mojang.com": " ???",
+    "authserver.mojang.com": " ???",
+    "sessionserver.mojang.com": " ???",
+    "textures.minecraft.net": " ???",
+    "api.mojang.com": " ???",
+    "session.minecraft.net": " ???",
+    "auth.mojang.com": " ???",
+    "skins.minecraft.net": " ???",
+    "mojang.com": " ???"
+};
+
 const status_friendly_names = {
     "minecraft.net": " Minecraft.net",
     "account.mojang.com": "Mojang accounts website",
@@ -110,6 +123,7 @@ module.exports = {
     autoStatus: function (callback) {
         const url = 'https://status.mojang.com/check';
 
+
         request({
             url: url,
             json: true
@@ -119,34 +133,22 @@ module.exports = {
                 let offline = [];
                 let problems = [];
                 let online = [];
+                let times = 0;
 
                 let parsed_status = {};
 
-                let times = 0;
                 let message = "";
-                let statuses = {
-                    "minecraft.net": " ???",
-                    "account.mojang.com": " ???",
-                    "authserver.mojang.com": " ???",
-                    "sessionserver.mojang.com": " ???",
-                    "textures.minecraft.net": " ???",
-                    "api.mojang.com": " ???",
-                    "session.minecraft.net": " ???",
-                    "auth.mojang.com": " ???",
-                    "skins.minecraft.net": " ???",
-                    "mojang.com": " ???"
-                };
 
                 data.forEach(function (element) {
-                    for (let key in element) {
-                        parsed_status[key] = element[key];
-                        if (statuses[key] !== element[key]) {
-                            if (element[key] === "green") {
-                                online.push(status_friendly_names[key]);
-                            } else if (element[key] === "yellow") {
-                                problems.push(status_friendly_names[key]);
+                    for (let value in element) {
+                        parsed_status[value] = element[value];
+                        if (statuses[value] != element[value]) {
+                            if (element[value] === "green") {
+                                online.push(status_friendly_names[value]);
+                            } else if (element[value] === "yellow") {
+                                problems.push(status_friendly_names[value]);
                             } else {
-                                offline.push(status_friendly_names[key]);
+                                offline.push(status_friendly_names[value]);
                             }
                         }
                     }
