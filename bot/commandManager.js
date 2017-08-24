@@ -54,7 +54,7 @@ function onCommand(bot, command, from, to, splitMsg) {
             break;
 
         default:
-            bot.say(to, "Command not found");
+            console.log("No command")
     }
 }
 
